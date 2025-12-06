@@ -1,0 +1,45 @@
+{
+  "sample_rate": 16000,
+  "ssl_duration": 3.0,
+  "ssl_num_layers": 13,
+  "ssl_features": 768,
+  "spec_frame_sec": 1.4,
+  "spec_num_frames": 2,
+  "spec_extend_type": "tile",
+  "specs": [
+    {
+      "mode": "melspec",
+      "n_fft": 4096,
+      "hop_length": 32,
+      "n_mels": 512,
+      "win_length": 4096,
+      "norm": 80
+    },
+    {
+      "mode": "melspec",
+      "n_fft": 4096,
+      "hop_length": 32,
+      "n_mels": 512,
+      "win_length": 2048,
+      "norm": 80
+    },
+    {
+      "mode": "melspec",
+      "n_fft": 4096,
+      "hop_length": 32,
+      "n_mels": 512,
+      "win_length": 1024,
+      "norm": 80
+    },
+    {
+      "mode": "melspec",
+      "n_fft": 4096,
+      "hop_length": 32,
+      "n_mels": 512,
+      "win_length": 512,
+      "norm": 80
+    }
+  ],
+  "spec_transform_size": 512,
+  "num_datasets": 10
+}

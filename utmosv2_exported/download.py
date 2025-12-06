@@ -9,13 +9,11 @@ You can override the cache directory by passing cache_dir to the functions,
 or by setting the UTMOSV2_CACHE_DIR environment variable.
 """
 
-import hashlib
 import os
 import urllib.request
 from pathlib import Path
 
 from .config import (
-    CONFIG_FILENAME,
     FUSION_MODEL_FILENAME,
     GITHUB_RELEASE_URL,
     SSL_MODEL_FILENAME,
@@ -99,7 +97,7 @@ def download_models(
     cache_dir: str | Path | None = None,
     force: bool = False,
     show_progress: bool = True,
-) -> tuple[Path, Path, Path]:
+) -> tuple[Path, Path]:
     """
     Download UTMOSv2 model files if not already cached.
 
@@ -109,7 +107,7 @@ def download_models(
         show_progress: If True, show download progress
 
     Returns:
-        Tuple of (ssl_model_path, fusion_model_path, config_path)
+        Tuple of (ssl_model_path, fusion_model_path)
 
     Raises:
         RuntimeError: If download fails
@@ -118,12 +116,10 @@ def download_models(
 
     ssl_path = cache_path / SSL_MODEL_FILENAME
     fusion_path = cache_path / FUSION_MODEL_FILENAME
-    config_path = cache_path / CONFIG_FILENAME
 
     files_to_download = [
         (f"{GITHUB_RELEASE_URL}/{SSL_MODEL_FILENAME}", ssl_path),
         (f"{GITHUB_RELEASE_URL}/{FUSION_MODEL_FILENAME}", fusion_path),
-        (f"{GITHUB_RELEASE_URL}/{CONFIG_FILENAME}", config_path),
     ]
 
     for url, dest in files_to_download:
@@ -140,14 +136,14 @@ def download_models(
                 dest.unlink()
             raise RuntimeError(f"Failed to download {url}: {e}") from e
 
-    return ssl_path, fusion_path, config_path
+    return ssl_path, fusion_path
 
 
 def get_model_paths(
     cache_dir: str | Path | None = None,
     auto_download: bool = True,
     show_progress: bool = True,
-) -> tuple[Path, Path, Path]:
+) -> tuple[Path, Path]:
     """
     Get paths to model files, downloading if necessary.
 
@@ -157,7 +153,7 @@ def get_model_paths(
         show_progress: If True, show download progress
 
     Returns:
-        Tuple of (ssl_model_path, fusion_model_path, config_path)
+        Tuple of (ssl_model_path, fusion_model_path)
 
     Raises:
         FileNotFoundError: If models not found and auto_download is False
@@ -167,10 +163,9 @@ def get_model_paths(
 
     ssl_path = cache_path / SSL_MODEL_FILENAME
     fusion_path = cache_path / FUSION_MODEL_FILENAME
-    config_path = cache_path / CONFIG_FILENAME
 
     # Check if all files exist
-    all_exist = ssl_path.exists() and fusion_path.exists() and config_path.exists()
+    all_exist = ssl_path.exists() and fusion_path.exists()
 
     if not all_exist:
         if auto_download:
@@ -181,11 +176,9 @@ def get_model_paths(
                 missing.append(SSL_MODEL_FILENAME)
             if not fusion_path.exists():
                 missing.append(FUSION_MODEL_FILENAME)
-            if not config_path.exists():
-                missing.append(CONFIG_FILENAME)
             raise FileNotFoundError(
                 f"Model files not found: {', '.join(missing)}. "
                 f"Set auto_download=True or run download_models() first."
             )
 
-    return ssl_path, fusion_path, config_path
+    return ssl_path, fusion_path

@@ -63,16 +63,15 @@ class UTMOSv2Predictor:
 
         # Get model paths (download if needed)
         if ssl_model_path is None or fusion_model_path is None:
-            ssl_path, fusion_path, cfg_path = get_model_paths(
+            ssl_path, fusion_path = get_model_paths(
                 cache_dir=cache_dir,
                 auto_download=auto_download,
                 show_progress=True,
             )
             ssl_model_path = ssl_model_path or ssl_path
             fusion_model_path = fusion_model_path or fusion_path
-            config_path = config_path or cfg_path
 
-        # Load config
+        # Load config (use bundled config by default, or custom if provided)
         if config_path is not None and Path(config_path).exists():
             with open(config_path) as f:
                 self.config = json.load(f)
