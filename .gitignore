@@ -21,6 +21,7 @@ env/
 *.pt
 *.pth
 *.onnx
+models/
 
 # Testing
 .pytest_cache/
