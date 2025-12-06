@@ -51,3 +51,6 @@ Repository = "https://github.com/gibiansky/utmosv2-exported"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["utmosv2_exported*"]
+
+[tool.setuptools.package-data]
+utmosv2_exported = ["*.json"]
