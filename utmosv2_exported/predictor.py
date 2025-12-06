@@ -104,12 +104,15 @@ class UTMOSv2Predictor:
         Preprocess audio for model input.
 
         Args:
-            audio: Audio tensor (samples,)
+            audio: Audio tensor (samples,) on any device
             seed: Random seed for reproducible segment selection
 
         Returns:
             Tuple of (ssl_hidden_states, spectrograms, domain_embedding)
         """
+        # Ensure audio is on CPU for preprocessing (librosa requires numpy)
+        audio = audio.cpu()
+
         # Create RNG for reproducibility
         rng = np.random.default_rng(seed) if seed is not None else None
 
