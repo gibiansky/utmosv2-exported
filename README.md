@@ -24,10 +24,10 @@ The original UTMOSv2 package has heavy dependencies (transformers, torchvision) 
 ## Installation
 
 ```bash
-pip install utmosv2-exported
+pip install git+https://github.com/gibiansky/utmosv2-exported.git
 ```
 
-Or install from source:
+Or clone and install locally:
 
 ```bash
 git clone https://github.com/gibiansky/utmosv2-exported.git
