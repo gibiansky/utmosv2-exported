@@ -241,9 +241,9 @@ class ExportableFusionModel(nn.Module):
             MOS score prediction (batch, 1)
         """
         # Create dummy domain tensors for sub-models (they don't use them after fc removal)
-        dummy_d = torch.zeros(
-            ssl_hidden_states.shape[0], self.num_dataset, device=ssl_hidden_states.device
-        )
+        # Use zeros_like + slicing to ensure device is derived from input tensor
+        # (torch.zeros with device= argument gets hardcoded during tracing)
+        dummy_d = torch.zeros_like(ssl_hidden_states[:, 0, 0, :self.num_dataset])
 
         # Process SSL features
         ssl_features = self.ssl_processor(ssl_hidden_states, dummy_d)

@@ -79,12 +79,17 @@ class UTMOSv2Predictor:
             self.config = DEFAULT_CONFIG
 
         # Load TorchScript models
-        self.ssl_model = torch.jit.load(str(ssl_model_path), map_location=self.device)
+        # Note: We load to CPU first, then move to target device. This is necessary
+        # because: (1) map_location only affects parameter loading, but traced
+        # constants (like torch.zeros calls) may have device hardcoded, and
+        # (2) some devices like MPS have dtype restrictions during loading.
+        # Calling .to(device) moves all tensors including traced constants.
+        self.ssl_model = torch.jit.load(str(ssl_model_path), map_location="cpu")
+        self.ssl_model.to(self.device)
         self.ssl_model.eval()
 
-        self.fusion_model = torch.jit.load(
-            str(fusion_model_path), map_location=self.device
-        )
+        self.fusion_model = torch.jit.load(str(fusion_model_path), map_location="cpu")
+        self.fusion_model.to(self.device)
         self.fusion_model.eval()
 
         # Initialize spectrogram processor
