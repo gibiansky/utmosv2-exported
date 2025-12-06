@@ -42,8 +42,11 @@ class ExportableSSLEncoder(nn.Module):
             Stacked hidden states (batch, num_layers, seq_len, features)
         """
         # Normalize audio (wav2vec2 expects normalized input)
-        # The FeatureExtractor normally does this, but we do it in PyTorch
-        audio = audio - audio.mean(dim=1, keepdim=True)
+        # Wav2Vec2FeatureExtractor does: (audio - mean) / sqrt(var + eps)
+        # We replicate this in pure PyTorch
+        mean = audio.mean(dim=1, keepdim=True)
+        var = audio.var(dim=1, keepdim=True)
+        audio = (audio - mean) / torch.sqrt(var + 1e-7)
 
         # Get hidden states from wav2vec2
         outputs = self.model(audio, output_hidden_states=True)
