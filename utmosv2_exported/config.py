@@ -24,5 +24,5 @@ FUSION_MODEL_FILENAME = "utmosv2_fusion.pt"
 
 # GitHub release URL for model download
 GITHUB_RELEASE_URL = (
-    "https://github.com/gibiansky/utmosv2-exported/releases/download/v0.1.0"
+    "https://github.com/gibiansky/utmosv2-exported/releases/download/v0.1"
 )
