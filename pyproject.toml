@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "utmosv2-exported"
+version = "0.1.0"
+description = "Standalone inference for UTMOSv2 speech quality model (no HuggingFace dependencies)"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+keywords = ["speech", "audio", "quality", "MOS", "UTMOSv2", "TTS"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Sound/Audio :: Analysis",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "torch>=2.0.0",
+    "torchaudio>=2.0.0",
+    "soundfile>=0.12.0",
+    "librosa>=0.10.0",
+]
+
+[project.optional-dependencies]
+export = [
+    "utmosv2 @ git+https://github.com/sarulab-speech/UTMOSv2.git",
+    "transformers>=4.30.0",
+    "torchvision>=0.15.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]
+
+[project.scripts]
+utmosv2-predict = "utmosv2_exported.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/gibiansky/utmosv2-exported"
+Repository = "https://github.com/gibiansky/utmosv2-exported"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["utmosv2_exported*"]
