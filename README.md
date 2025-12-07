@@ -213,10 +213,10 @@ MIT License
 If you use this package, please cite the original UTMOSv2 paper:
 
 ```bibtex
-@inproceedings{utmosv2,
-  title={UTMOSv2: A Strong and Highly Versatile Neural MOS Predictor},
-  author={Baba, Yuuki and Saeki, Takaaki and Sakakibara, Kazuki and Nozaki, Ryo and Kubo, Yuki and Shinoda, Koichi},
-  booktitle={Proceedings of Interspeech},
-  year={2024}
+@inproceedings{baba2024utmosv2,
+  title     = {The T05 System for The {V}oice{MOS} {C}hallenge 2024: Transfer Learning from Deep Image Classifier to Naturalness {MOS} Prediction of High-Quality Synthetic Speech},
+  author    = {Baba, Kaito and Nakata, Wataru and Saito, Yuki and Saruwatari, Hiroshi},
+  booktitle = {IEEE Spoken Language Technology Workshop (SLT)},
+  year      = {2024},
 }
 ```
